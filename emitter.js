@@ -4,7 +4,7 @@
  * Сделано задание на звездочку
  * Реализованы методы several и through
  */
-const isStar = false;
+const isStar = true;
 
 /**
  * Возвращает новый emitter
@@ -33,7 +33,7 @@ function getEmitter() {
             var freq = 1;
             if (obj) {
                 health = obj.health ? obj.health : Infinity;
-                freq = obj[freq] ? obj[freq] : 1;
+                freq = obj.freq ? obj.freq : 1;
             }
 
             listener[event].push({ context, handler, health, freq, subscribe: 0 });
