@@ -49,12 +49,22 @@ function getEmitter() {
          */
         off: function (event, context) {
             console.info(event, context);
-            var key = Object.keys(listener[event]);
+            var key = Object.keys(listener).filter(evnt => evnt === event ||
+                evnt.startsWith(event + '.'));
             for (var i = 0; i < key.length; i++) {
-                if (listener[event][key[i]].context === context) {
-                    delete listener[event][key[i]];
+                var keyEvent = Object.keys(listener[key[i]]);
+                for (var j = 0; j < keyEvent.length; j++) {
+                    this.forOFF(listener, key[i], keyEvent[j], context);
                 }
 
+            }
+
+            return this;
+        },
+
+        forOFF: function forOFF(listene, event, keyEvent, context) {
+            if (listene[event][keyEvent].context === context) {
+                delete listene[event][keyEvent];
             }
 
             return this;
