@@ -53,7 +53,7 @@ function getEmitter() {
             for (var i = 0; i < key.length; i++) {
                 if (listener[event][key[i]].context === context) {
                     delete listener[event][key[i]];
-                    break;
+                    return this;
                 }
             }
 
@@ -89,6 +89,8 @@ function getEmitter() {
                 list.handler.call(list.context);
                 list.health--;
             }
+
+            return this;
         },
 
         /**
