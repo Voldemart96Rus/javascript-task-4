@@ -32,8 +32,8 @@ function getEmitter() {
             var health = Infinity;
             var freq = 1;
             if (obj) {
-                health = obj.health ? obj.health : Infinity;
-                freq = obj.freq ? obj.freq : 1;
+                health = obj.health || Infinity;
+                freq = obj.freq || 1;
             }
 
             listener[event].push({ context, handler, health, freq, subscribe: 0 });
@@ -80,9 +80,10 @@ function getEmitter() {
             if (listener[event]) {
                 var key = Object.keys(listener[event]);
                 for (var i = 0; i < key.length; i++) {
-                    var through = listener[event][key[i]].subscribe % listener[event][key[i]].freq;
-                    this.forEmit(listener[event][key[i]], through);
-                    listener[event][key[i]].subscribe++;
+                    let listenerEvent = listener[event][key[i]];
+                    var through = listenerEvent.subscribe % listenerEvent.freq;
+                    this.forEmit(listenerEvent, through);
+                    listenerEvent.subscribe++;
                 }
             }
             if (event.includes('.')) {
